@@ -146,6 +146,10 @@ DATA.questions.forEach((q,i)=>{
     card.appendChild(label);
     const a = document.createElement('audio');
     a.controls = true; a.preload='auto'; a.src = clip;
+    // 独占播放: 本段开始播放时, 暂停页面上所有其他音频
+    a.addEventListener('play', ()=>{
+      document.querySelectorAll('audio').forEach(o=>{ if(o!==a) o.pause(); });
+    });
     card.appendChild(a);
     let box=null, words=[];
     if(q.transcripts && q.transcripts[ci]){
